@@ -59,8 +59,8 @@ namespace ServiceManager
             }
             catch (Exception ex)
             {
-                ErrorMessageDialog formServerList = new ErrorMessageDialog("Unable to update the server list", ex.ToString(), true);
-                formServerList.ShowDialog();
+                ErrorMessageDialog errorMessageDialog = new ErrorMessageDialog("Unable to update the server list", ex.ToString(), true);
+                errorMessageDialog.ShowDialog();
             }
         }
 
@@ -81,14 +81,14 @@ namespace ServiceManager
                 }
                 catch (Exception ex)
                 {
-                    ErrorMessageDialog formServerList = new ErrorMessageDialog("Unable to load the server list", ex.ToString(), true);
-                    formServerList.ShowDialog();
+                    ErrorMessageDialog errorMessageDialog = new ErrorMessageDialog("Unable to load the server list", ex.ToString(), true);
+                    errorMessageDialog.ShowDialog();
                 }
             }
             else
             {
-                ErrorMessageDialog formServerList = new ErrorMessageDialog($"Could not find server list file", path, true);
-                formServerList.ShowDialog();
+                ErrorMessageDialog errorMessageDialog = new ErrorMessageDialog($"Could not find server list file", path, true);
+                errorMessageDialog.ShowDialog();
             }
 
             return servers;
@@ -167,10 +167,10 @@ namespace ServiceManager
 
         public static string GetServiceStatus(string computerName, string serviceName)
         {
-            ServiceController sc = new ServiceController();
-            sc.ServiceName = serviceName;
-            sc.MachineName = computerName;
-            string result = sc.Status.ToString();
+            ServiceController serviceController = new ServiceController();
+            serviceController.ServiceName = serviceName;
+            serviceController.MachineName = computerName;
+            string result = serviceController.Status.ToString();
 
             return result;
         }

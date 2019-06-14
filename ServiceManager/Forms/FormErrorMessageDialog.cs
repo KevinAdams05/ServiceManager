@@ -22,17 +22,17 @@ namespace ServiceManager
             labelErrorTitle.Text = title;
             textDetailErrorText.Text = detailedError;
 
-            if (hasDetailedError == true)
+            if (hasDetailedError)
             {
-                this.Height = WindowHeightExpanded;
-                this.textDetailErrorText.Visible = true;
-                this.labelErrorDetails.Visible = true;
+                Height = WindowHeightExpanded;
+                textDetailErrorText.Visible = true;
+                labelErrorDetails.Visible = true;
             }
             else
             {
-                this.textDetailErrorText.Visible = false;
-                this.labelErrorDetails.Visible = false;
-                this.Height = WindowHeightCollapsed;
+                textDetailErrorText.Visible = false;
+                labelErrorDetails.Visible = false;
+                Height = WindowHeightCollapsed;
             }
         }
 
@@ -55,7 +55,7 @@ namespace ServiceManager
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
