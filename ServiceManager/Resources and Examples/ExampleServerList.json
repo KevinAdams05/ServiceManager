@@ -1,0 +1,76 @@
+[
+  {
+    "EnvironmentName": "PROD",
+    "ServerName": "SRVPRODSQL01",
+    "ServerType": 0,
+    "ServiceName": "MSSQLSERVER"
+  },
+  {
+    "EnvironmentName": "PROD",
+    "ServerName": "SRVPRODSQL01",
+    "ServerType": 0,
+    "ServiceName": "SQLSERVERAGENT"
+  },
+  {
+    "EnvironmentName": "PROD",
+    "ServerName": "SRVPRODWEB01",
+    "ServerType": 1,
+    "ServiceName": null
+  },
+  {
+    "EnvironmentName": "PROD",
+    "ServerName": "SRVPRODMSG01",
+    "ServerType": 0,
+    "ServiceName": "RabbitMQ_ProdMsgQueue"
+  },
+
+  {
+    "EnvironmentName": "DEV",
+    "ServerName": "SRVDEVSQL01",
+    "ServerType": 0,
+    "ServiceName": "MSSQLSERVER"
+  },
+  {
+    "EnvironmentName": "DEV",
+    "ServerName": "SRVDEVSQL01",
+    "ServerType": 0,
+    "ServiceName": "SQLSERVERAGENT"
+  },
+  {
+    "EnvironmentName": "DEV",
+    "ServerName": "SRVDEVWEB01",
+    "ServerType": 1,
+    "ServiceName": null
+  },
+  {
+    "EnvironmentName": "DEV",
+    "ServerName": "SRVDEVMSG01",
+    "ServerType": 0,
+    "ServiceName": "RabbitMQ_DevMsgQueue"
+  },
+
+  {
+    "EnvironmentName": "TEST",
+    "ServerName": "SRVTESTSQL01",
+    "ServerType": 0,
+    "ServiceName": "MSSQLSERVER"
+  },
+  {
+    "EnvironmentName": "TEST",
+    "ServerName": "SRVTESTSQL01",
+    "ServerType": 0,
+    "ServiceName": "SQLSERVERAGENT"
+  },
+  {
+    "EnvironmentName": "TEST",
+    "ServerName": "SRVTESTWEB01",
+    "ServerType": 1,
+    "ServiceName": ""
+  },
+  {
+    "EnvironmentName": "TEST",
+    "ServerName": "SRVTESTMSG01",
+    "ServerType": 0,
+    "ServiceName": "RabbitMQ_TestMsgQueue"
+  }
+]
