@@ -238,7 +238,7 @@ namespace ServiceManager
         {
             string theme = ConfigurationManager.AppSettings["Theme"];
 
-            return string.IsNullOrEmpty(theme) ? "Hazel" : theme;
+            return string.IsNullOrEmpty(theme) ? "Asphalt" : theme;
         }
 
         public static void UpdateSettingTheme(string theme)

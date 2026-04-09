@@ -23,11 +23,13 @@ namespace ServiceManager
         private DelayedTextBox textBoxStatus;
         private DelayedTextBox textBox1;
         private KryptonLabel labelFilter;
+        private ToolStripButton toolStripButtonAutoRefresh;
 
         public FormMainWindow()
         {
             InitializeComponent();
             SetVersionTitle();
+            SetupToolbar();
             CreateControls();
             SetupDocking();
             ApplyThemeFromSettings();
@@ -49,6 +51,110 @@ namespace ServiceManager
             {
                 this.Icon = appIcon;
             }
+        }
+
+        private Image LoadEmbeddedImage(string resourceName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream != null)
+                {
+                    return Image.FromStream(stream);
+                }
+            }
+
+            return null;
+        }
+
+        private void SetupToolbar()
+        {
+            Image refreshImage = LoadEmbeddedImage("Reload32.png");
+            Image autoRefreshImage = LoadEmbeddedImage("Clock32.png");
+            Image editServerListImage = LoadEmbeddedImage("Table32.png");
+            Image themeImage = LoadEmbeddedImage("Settings32.png");
+            Image aboutImage = LoadEmbeddedImage("Help32.png");
+
+            ToolStripButton buttonRefresh = new ToolStripButton("Refresh", refreshImage, ButtonRefresh_Click);
+            buttonRefresh.ImageScaling = ToolStripItemImageScaling.None;
+            buttonRefresh.TextImageRelation = TextImageRelation.ImageAboveText;
+
+            toolStripButtonAutoRefresh = new ToolStripButton("Auto Refresh", autoRefreshImage, ButtonAutoRefresh_Click);
+            toolStripButtonAutoRefresh.ImageScaling = ToolStripItemImageScaling.None;
+            toolStripButtonAutoRefresh.TextImageRelation = TextImageRelation.ImageAboveText;
+
+            ToolStripButton buttonEditServerList = new ToolStripButton("Edit Server List", editServerListImage, ButtonEditServerList_Click);
+            buttonEditServerList.ImageScaling = ToolStripItemImageScaling.None;
+            buttonEditServerList.TextImageRelation = TextImageRelation.ImageAboveText;
+
+            ToolStripDropDownButton buttonTheme = new ToolStripDropDownButton("Theme", themeImage);
+            buttonTheme.ImageScaling = ToolStripItemImageScaling.None;
+            buttonTheme.TextImageRelation = TextImageRelation.ImageAboveText;
+            buttonTheme.DropDownOpening += ThemeDropDown_Opening;
+
+            ToolStripButton buttonAbout = new ToolStripButton("About", aboutImage, ButtonAbout_Click);
+            buttonAbout.ImageScaling = ToolStripItemImageScaling.None;
+            buttonAbout.TextImageRelation = TextImageRelation.ImageAboveText;
+
+            toolStrip.Items.AddRange(new ToolStripItem[]
+            {
+                buttonRefresh,
+                toolStripButtonAutoRefresh,
+                new ToolStripSeparator(),
+                buttonEditServerList,
+                new ToolStripSeparator(),
+                buttonTheme,
+                new ToolStripSeparator(),
+                buttonAbout
+            });
+        }
+
+        private void ThemeDropDown_Opening(object sender, EventArgs e)
+        {
+            ToolStripDropDownButton button = (ToolStripDropDownButton)sender;
+            button.DropDownItems.Clear();
+
+            string themesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Themes");
+
+            if (!Directory.Exists(themesFolder))
+            {
+                return;
+            }
+
+            string[] themeFiles = Directory.GetFiles(themesFolder, "*.xml");
+            Array.Sort(themeFiles, (a, b) => string.Compare(Path.GetFileNameWithoutExtension(a), Path.GetFileNameWithoutExtension(b), StringComparison.OrdinalIgnoreCase));
+
+            foreach (string themeFile in themeFiles)
+            {
+                string themeName = Path.GetFileNameWithoutExtension(themeFile);
+                ToolStripMenuItem menuItem = new ToolStripMenuItem(themeName);
+                menuItem.Tag = themeFile;
+                menuItem.Checked = string.Equals(themeName, currentAppliedTheme, StringComparison.OrdinalIgnoreCase);
+                menuItem.Click += ThemeMenuItem_Click;
+                button.DropDownItems.Add(menuItem);
+            }
+
+            button.DropDownItems.Add(new ToolStripSeparator());
+
+            string defaultTheme = Utility.GetSettingTheme();
+            ToolStripMenuItem defaultLabel = new ToolStripMenuItem($"Default: {defaultTheme}");
+            defaultLabel.Enabled = false;
+            button.DropDownItems.Add(defaultLabel);
+
+            ToolStripMenuItem setDefaultItem = new ToolStripMenuItem("Set Current as Default");
+            setDefaultItem.Click += SetCurrentAsDefault_Click;
+            button.DropDownItems.Add(setDefaultItem);
+        }
+
+        private void ThemeMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+            string themeFile = (string)menuItem.Tag;
+            string themeName = Path.GetFileNameWithoutExtension(themeFile);
+
+            ApplyTheme(themeName);
+            currentAppliedTheme = themeName;
         }
 
         private void CreateControls()
@@ -282,7 +388,7 @@ namespace ServiceManager
 
                 string messageText = $"Last refresh: {DateTime.Now}";
                 textBoxStatus.AppendText(messageText + Environment.NewLine);
-                labelRefreshDate.Values.Text = messageText;
+                statusLabelRefresh.Text = messageText;
             }
             catch (Exception ex)
             {
@@ -526,7 +632,7 @@ namespace ServiceManager
             if (autoRefreshTimer.Enabled)
             {
                 autoRefreshTimer.Stop();
-                buttonAutoRefresh.Values.Text = "Auto Refresh: Off";
+                toolStripButtonAutoRefresh.Text = "Auto Refresh";
                 textBoxStatus.AppendText($"Auto refresh disabled{Environment.NewLine}");
             }
             else
@@ -534,7 +640,7 @@ namespace ServiceManager
                 int intervalMinutes = Utility.GetSettingAutoRefreshMinutes();
                 autoRefreshTimer.Interval = intervalMinutes * 60 * 1000;
                 autoRefreshTimer.Start();
-                buttonAutoRefresh.Values.Text = $"Auto Refresh: {intervalMinutes}m";
+                toolStripButtonAutoRefresh.Text = $"Auto Refresh ({intervalMinutes}m)";
                 textBoxStatus.AppendText($"Auto refresh enabled every {intervalMinutes} minutes{Environment.NewLine}");
             }
         }
@@ -542,79 +648,6 @@ namespace ServiceManager
         private void AutoRefreshTimer_Tick(object sender, EventArgs e)
         {
             RefreshServiceStatus();
-        }
-
-        private void ButtonThemeSelect_Click(object sender, EventArgs e)
-        {
-            BuildThemeMenu();
-            themeMenuStrip.Show(buttonThemeSelect, new Point(0, buttonThemeSelect.Height));
-        }
-
-        private void BuildThemeMenu()
-        {
-            themeMenuStrip.Items.Clear();
-            string themesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Themes");
-            string currentTheme = Utility.GetSettingTheme();
-
-            if (!Directory.Exists(themesFolder))
-            {
-                return;
-            }
-
-            string[] themeFiles = Directory.GetFiles(themesFolder, "*.xml");
-            Array.Sort(themeFiles, (a, b) => string.Compare(Path.GetFileNameWithoutExtension(a), Path.GetFileNameWithoutExtension(b), StringComparison.OrdinalIgnoreCase));
-
-            foreach (string themeFile in themeFiles)
-            {
-                string themeName = Path.GetFileNameWithoutExtension(themeFile);
-                ToolStripMenuItem menuItem = new ToolStripMenuItem(themeName);
-                menuItem.Tag = themeFile;
-
-                if (string.Equals(themeName, currentTheme, StringComparison.OrdinalIgnoreCase))
-                {
-                    menuItem.Checked = true;
-                }
-
-                menuItem.Click += ThemeMenuItem_Click;
-
-                // Right-click to set as default
-                menuItem.MouseDown += ThemeMenuItem_MouseDown;
-
-                themeMenuStrip.Items.Add(menuItem);
-            }
-
-            themeMenuStrip.Items.Add(new ToolStripSeparator());
-
-            string defaultTheme = Utility.GetSettingTheme();
-            ToolStripMenuItem defaultLabel = new ToolStripMenuItem($"Default: {defaultTheme}");
-            defaultLabel.Enabled = false;
-            themeMenuStrip.Items.Add(defaultLabel);
-
-            ToolStripMenuItem setDefaultItem = new ToolStripMenuItem("Set Current as Default");
-            setDefaultItem.Click += SetCurrentAsDefault_Click;
-            themeMenuStrip.Items.Add(setDefaultItem);
-        }
-
-        private void ThemeMenuItem_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
-            string themeFile = (string)menuItem.Tag;
-            string themeName = Path.GetFileNameWithoutExtension(themeFile);
-
-            ApplyTheme(themeName);
-            currentAppliedTheme = themeName;
-        }
-
-        private void ThemeMenuItem_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
-                string themeName = Path.GetFileNameWithoutExtension((string)menuItem.Tag);
-                Utility.UpdateSettingTheme(themeName);
-                textBoxStatus.AppendText($"Default theme set to: {themeName}{Environment.NewLine}");
-                themeMenuStrip.Close();
-            }
         }
 
         private void SetCurrentAsDefault_Click(object sender, EventArgs e)

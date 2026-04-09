@@ -20,7 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Krypton.Docking" Version="100.26.1.19" />
     <PackageReference Include="Krypton.Navigator" Version="100.26.1.19" />
-    <PackageReference Include="Krypton.Toolkit" Version="100.26.1.19" />
+<PackageReference Include="Krypton.Toolkit" Version="100.26.1.19" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Management" Version="9.0.4" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.4" />
@@ -35,6 +35,16 @@
     <Content Include="Resources and Examples\Settings.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\16x16\Reload.png"><LogicalName>Reload16.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\32x32\Reload.png"><LogicalName>Reload32.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\16x16\Clock.png"><LogicalName>Clock16.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\32x32\Clock.png"><LogicalName>Clock32.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\16x16\Table.png"><LogicalName>Table16.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\32x32\Table.png"><LogicalName>Table32.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\16x16\Settings.png"><LogicalName>Settings16.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\32x32\Settings.png"><LogicalName>Settings32.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\16x16\Help.png"><LogicalName>Help16.png</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\Resources\ravenna-3d-icons-by-double-j-design\png\32x32\Help.png"><LogicalName>Help32.png</LogicalName></EmbeddedResource>
   </ItemGroup>
 
 </Project>
