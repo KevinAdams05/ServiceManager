@@ -14,6 +14,7 @@
     <Company>Kevin Adams</Company>
     <Copyright>Copyright (c) Kevin Adams 2024</Copyright>
     <Description>Windows service management tool for monitoring and controlling services across multiple servers.</Description>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>

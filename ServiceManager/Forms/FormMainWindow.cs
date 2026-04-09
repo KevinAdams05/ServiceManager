@@ -65,8 +65,8 @@ namespace ServiceManager
                 new DataGridViewTextBoxColumn { HeaderText = "Service", Name = "Service", Width = 150 },
                 new DataGridViewTextBoxColumn { HeaderText = "Status", Name = "Status" },
                 new DataGridViewTextBoxColumn { HeaderText = "Memory (MB)", Name = "Memory", Width = 100 },
-                new DataGridViewButtonColumn { HeaderText = "", Name = "Stop", Text = "Stop", UseColumnTextForButtonValue = true, Width = 80 },
-                new DataGridViewButtonColumn { HeaderText = "", Name = "Start", Text = "Start", UseColumnTextForButtonValue = true, Width = 80 }
+                new KryptonDataGridViewButtonColumn { HeaderText = "", Name = "Stop", Text = "Stop", UseColumnTextForButtonValue = true, Width = 80 },
+                new KryptonDataGridViewButtonColumn { HeaderText = "", Name = "Start", Text = "Start", UseColumnTextForButtonValue = true, Width = 80 }
             });
             dataGridView1.CellClick += DataGridView1_CellClick;
 
@@ -85,9 +85,9 @@ namespace ServiceManager
                 new DataGridViewTextBoxColumn { HeaderText = "Environment", Name = "AppServerEnvironmentColumn" },
                 new DataGridViewTextBoxColumn { HeaderText = "Server", Name = "AppServerServerColumn" },
                 new DataGridViewTextBoxColumn { HeaderText = "Status", Name = "AppServerStatusColumn" },
-                new DataGridViewButtonColumn { HeaderText = "Reset", Name = "AppServerResetColumn", Text = "Reset", UseColumnTextForButtonValue = true },
-                new DataGridViewButtonColumn { HeaderText = "", Name = "AppServerStopColumn", Text = "Stop", UseColumnTextForButtonValue = true },
-                new DataGridViewButtonColumn { HeaderText = "", Name = "AppServerStartColumn", Text = "Start", UseColumnTextForButtonValue = true }
+                new KryptonDataGridViewButtonColumn { HeaderText = "Reset", Name = "AppServerResetColumn", Text = "Reset", UseColumnTextForButtonValue = true },
+                new KryptonDataGridViewButtonColumn { HeaderText = "", Name = "AppServerStopColumn", Text = "Stop", UseColumnTextForButtonValue = true },
+                new KryptonDataGridViewButtonColumn { HeaderText = "", Name = "AppServerStartColumn", Text = "Start", UseColumnTextForButtonValue = true }
             });
             dataGridViewWebServers.CellClick += DataGridViewWebServers_CellClick;
 
@@ -137,13 +137,16 @@ namespace ServiceManager
             kryptonDockingManager.ManageControl("Control", panelMain, w);
             kryptonDockingManager.ManageFloating("Floating", this);
 
-            // Add main tabs to workspace
+            // Add Services to workspace
             KryptonWorkspaceCell cell = new KryptonWorkspaceCell();
-            cell.Pages.AddRange(new KryptonPage[] { servicesPage, webServersPage });
+            cell.Pages.Add(servicesPage);
             kryptonDockableWorkspace.Root.Children.Add(cell);
 
-            // Add status log as docked panel at bottom
+            // Add Status Log at bottom edge first (outermost)
             kryptonDockingManager.AddDockspace("Control", DockingEdge.Bottom, new KryptonPage[] { statusPage });
+
+            // Add Web Servers at bottom edge second (between workspace and Status Log)
+            kryptonDockingManager.AddDockspace("Control", DockingEdge.Bottom, new KryptonPage[] { webServersPage });
         }
 
         private KryptonPage CreatePage(string title, string uniqueName)

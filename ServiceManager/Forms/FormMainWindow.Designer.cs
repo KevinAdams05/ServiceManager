@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace ServiceManager
 {
@@ -19,178 +19,182 @@ namespace ServiceManager
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-
-            this.kryptonManager = new Krypton.Toolkit.KryptonManager(this.components);
-            this.kryptonDockingManager = new Krypton.Docking.KryptonDockingManager();
-            this.panelToolbar = new Krypton.Toolkit.KryptonPanel();
-            this.panelMain = new Krypton.Toolkit.KryptonPanel();
-            this.buttonRefresh = new Krypton.Toolkit.KryptonButton();
-            this.buttonEditServerList = new Krypton.Toolkit.KryptonButton();
-            this.buttonThemeSelect = new Krypton.Toolkit.KryptonButton();
-            this.labelRefreshDate = new Krypton.Toolkit.KryptonLabel();
-            this.kryptonDockableWorkspace = new Krypton.Docking.KryptonDockableWorkspace();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextMenuItemSetDefaultSortOrder = new System.Windows.Forms.ToolStripMenuItem();
-            this.themeMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.buttonAutoRefresh = new Krypton.Toolkit.KryptonButton();
-            this.autoRefreshTimer = new System.Windows.Forms.Timer(this.components);
-            this.buttonAbout = new Krypton.Toolkit.KryptonButton();
-
-            ((System.ComponentModel.ISupportInitialize)(this.panelToolbar)).BeginInit();
-            this.panelToolbar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelMain)).BeginInit();
-            this.panelMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonDockableWorkspace)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
-            this.SuspendLayout();
-
-            //
+            components = new System.ComponentModel.Container();
+            kryptonManager = new Krypton.Toolkit.KryptonManager(components);
+            kryptonDockingManager = new Krypton.Docking.KryptonDockingManager();
+            panelToolbar = new Krypton.Toolkit.KryptonPanel();
+            buttonAbout = new Krypton.Toolkit.KryptonButton();
+            buttonEditServerList = new Krypton.Toolkit.KryptonButton();
+            buttonThemeSelect = new Krypton.Toolkit.KryptonButton();
+            buttonAutoRefresh = new Krypton.Toolkit.KryptonButton();
+            labelRefreshDate = new Krypton.Toolkit.KryptonLabel();
+            buttonRefresh = new Krypton.Toolkit.KryptonButton();
+            panelMain = new Krypton.Toolkit.KryptonPanel();
+            kryptonDockableWorkspace = new Krypton.Docking.KryptonDockableWorkspace();
+            contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
+            contextMenuItemSetDefaultSortOrder = new System.Windows.Forms.ToolStripMenuItem();
+            themeMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
+            autoRefreshTimer = new System.Windows.Forms.Timer(components);
+            ((System.ComponentModel.ISupportInitialize)panelToolbar).BeginInit();
+            panelToolbar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)panelMain).BeginInit();
+            panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)kryptonDockableWorkspace).BeginInit();
+            contextMenuStrip1.SuspendLayout();
+            SuspendLayout();
+            // 
             // kryptonManager
-            //
-            this.kryptonManager.GlobalPaletteMode = Krypton.Toolkit.PaletteMode.Microsoft365White;
-
-            //
+            // 
+            kryptonManager.GlobalPaletteMode = Krypton.Toolkit.PaletteMode.Microsoft365White;
+            kryptonManager.ToolkitStrings.MessageBoxStrings.LessDetails = "L&ess Details...";
+            kryptonManager.ToolkitStrings.MessageBoxStrings.MoreDetails = "&More Details...";
+            // 
             // panelToolbar
-            //
-            this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelToolbar.Location = new System.Drawing.Point(0, 0);
-            this.panelToolbar.Name = "panelToolbar";
-            this.panelToolbar.Size = new System.Drawing.Size(784, 40);
-            this.panelToolbar.TabIndex = 0;
-            this.panelToolbar.Controls.Add(this.buttonAbout);
-            this.panelToolbar.Controls.Add(this.buttonEditServerList);
-            this.panelToolbar.Controls.Add(this.buttonThemeSelect);
-            this.panelToolbar.Controls.Add(this.buttonAutoRefresh);
-            this.panelToolbar.Controls.Add(this.labelRefreshDate);
-            this.panelToolbar.Controls.Add(this.buttonRefresh);
-
+            // 
+            panelToolbar.Controls.Add(buttonAbout);
+            panelToolbar.Controls.Add(buttonEditServerList);
+            panelToolbar.Controls.Add(buttonThemeSelect);
+            panelToolbar.Controls.Add(buttonAutoRefresh);
+            panelToolbar.Controls.Add(labelRefreshDate);
+            panelToolbar.Controls.Add(buttonRefresh);
+            panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
+            panelToolbar.Location = new System.Drawing.Point(0, 0);
+            panelToolbar.Name = "panelToolbar";
+            panelToolbar.Size = new System.Drawing.Size(930, 40);
+            panelToolbar.TabIndex = 0;
+            // 
+            // buttonAbout
+            // 
+            buttonAbout.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            buttonAbout.Location = new System.Drawing.Point(870, 8);
+            buttonAbout.Name = "buttonAbout";
+            buttonAbout.Size = new System.Drawing.Size(60, 25);
+            buttonAbout.TabIndex = 5;
+            buttonAbout.Values.DropDownArrowColor = System.Drawing.Color.Empty;
+            buttonAbout.Values.Text = "About";
+            buttonAbout.Click += ButtonAbout_Click;
+            // 
+            // buttonEditServerList
+            // 
+            buttonEditServerList.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            buttonEditServerList.Location = new System.Drawing.Point(770, 8);
+            buttonEditServerList.Name = "buttonEditServerList";
+            buttonEditServerList.Size = new System.Drawing.Size(96, 25);
+            buttonEditServerList.TabIndex = 3;
+            buttonEditServerList.Values.DropDownArrowColor = System.Drawing.Color.Empty;
+            buttonEditServerList.Values.Text = "Edit Server List";
+            buttonEditServerList.Click += ButtonEditServerList_Click;
+            // 
+            // buttonThemeSelect
+            // 
+            buttonThemeSelect.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            buttonThemeSelect.Location = new System.Drawing.Point(646, 8);
+            buttonThemeSelect.Name = "buttonThemeSelect";
+            buttonThemeSelect.Size = new System.Drawing.Size(116, 25);
+            buttonThemeSelect.TabIndex = 2;
+            buttonThemeSelect.Values.DropDownArrowColor = System.Drawing.Color.Empty;
+            buttonThemeSelect.Values.Text = "Theme ▼";
+            buttonThemeSelect.Click += ButtonThemeSelect_Click;
+            // 
+            // buttonAutoRefresh
+            // 
+            buttonAutoRefresh.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            buttonAutoRefresh.Location = new System.Drawing.Point(518, 8);
+            buttonAutoRefresh.Name = "buttonAutoRefresh";
+            buttonAutoRefresh.Size = new System.Drawing.Size(120, 25);
+            buttonAutoRefresh.TabIndex = 4;
+            buttonAutoRefresh.Values.DropDownArrowColor = System.Drawing.Color.Empty;
+            buttonAutoRefresh.Values.Text = "Auto Refresh: Off";
+            buttonAutoRefresh.Click += ButtonAutoRefresh_Click;
+            // 
+            // labelRefreshDate
+            // 
+            labelRefreshDate.Location = new System.Drawing.Point(90, 10);
+            labelRefreshDate.Name = "labelRefreshDate";
+            labelRefreshDate.Size = new System.Drawing.Size(90, 25);
+            labelRefreshDate.TabIndex = 1;
+            labelRefreshDate.Values.Text = "";
             //
             // buttonRefresh
             //
-            this.buttonRefresh.Location = new System.Drawing.Point(8, 8);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(75, 25);
-            this.buttonRefresh.TabIndex = 0;
-            this.buttonRefresh.Values.Text = "Refresh";
-            this.buttonRefresh.Click += new System.EventHandler(this.ButtonRefresh_Click);
-
-            //
-            // labelRefreshDate
-            //
-            this.labelRefreshDate.Location = new System.Drawing.Point(90, 10);
-            this.labelRefreshDate.Name = "labelRefreshDate";
-            this.labelRefreshDate.TabIndex = 1;
-            this.labelRefreshDate.Values.Text = "";
-
-            //
-            // buttonThemeSelect
-            //
-            this.buttonThemeSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonThemeSelect.Location = new System.Drawing.Point(556, 8);
-            this.buttonThemeSelect.Name = "buttonThemeSelect";
-            this.buttonThemeSelect.Size = new System.Drawing.Size(116, 25);
-            this.buttonThemeSelect.TabIndex = 2;
-            this.buttonThemeSelect.Values.Text = "Theme \u25BC";
-            this.buttonThemeSelect.Click += new System.EventHandler(this.ButtonThemeSelect_Click);
-
-            //
-            // themeMenuStrip
-            //
-            this.themeMenuStrip.Name = "themeMenuStrip";
-            this.themeMenuStrip.Size = new System.Drawing.Size(200, 26);
-
-            //
-            // buttonAutoRefresh
-            //
-            this.buttonAutoRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAutoRefresh.Location = new System.Drawing.Point(430, 8);
-            this.buttonAutoRefresh.Name = "buttonAutoRefresh";
-            this.buttonAutoRefresh.Size = new System.Drawing.Size(120, 25);
-            this.buttonAutoRefresh.TabIndex = 4;
-            this.buttonAutoRefresh.Values.Text = "Auto Refresh: Off";
-            this.buttonAutoRefresh.Click += new System.EventHandler(this.ButtonAutoRefresh_Click);
-
-            //
-            // autoRefreshTimer
-            //
-            this.autoRefreshTimer.Interval = 300000;
-            this.autoRefreshTimer.Tick += new System.EventHandler(this.AutoRefreshTimer_Tick);
-
-            //
-            // buttonEditServerList
-            //
-            this.buttonEditServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEditServerList.Location = new System.Drawing.Point(680, 8);
-            this.buttonEditServerList.Name = "buttonEditServerList";
-            this.buttonEditServerList.Size = new System.Drawing.Size(96, 25);
-            this.buttonEditServerList.TabIndex = 3;
-            this.buttonEditServerList.Values.Text = "Edit Server List";
-            this.buttonEditServerList.Click += new System.EventHandler(this.ButtonEditServerList_Click);
-
-            //
-            // buttonAbout
-            //
-            this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAbout.Location = new System.Drawing.Point(780, 8);
-            this.buttonAbout.Name = "buttonAbout";
-            this.buttonAbout.Size = new System.Drawing.Size(60, 25);
-            this.buttonAbout.TabIndex = 5;
-            this.buttonAbout.Values.Text = "About";
-            this.buttonAbout.Click += new System.EventHandler(this.ButtonAbout_Click);
-
-            //
+            buttonRefresh.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            buttonRefresh.ButtonStyle = Krypton.Toolkit.ButtonStyle.Standalone;
+            buttonRefresh.Location = new System.Drawing.Point(8, 8);
+            buttonRefresh.Name = "buttonRefresh";
+            buttonRefresh.Size = new System.Drawing.Size(75, 25);
+            buttonRefresh.TabIndex = 0;
+            buttonRefresh.Values.DropDownArrowColor = System.Drawing.Color.Empty;
+            buttonRefresh.Values.Text = "Refresh";
+            buttonRefresh.Click += ButtonRefresh_Click;
+            // 
             // panelMain
-            //
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 40);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(784, 521);
-            this.panelMain.TabIndex = 1;
-            this.panelMain.Controls.Add(this.kryptonDockableWorkspace);
-
-            //
+            // 
+            panelMain.Controls.Add(kryptonDockableWorkspace);
+            panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            panelMain.Location = new System.Drawing.Point(0, 40);
+            panelMain.Name = "panelMain";
+            panelMain.Size = new System.Drawing.Size(930, 521);
+            panelMain.TabIndex = 1;
+            // 
             // kryptonDockableWorkspace
-            //
-            this.kryptonDockableWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonDockableWorkspace.Name = "kryptonDockableWorkspace";
-            this.kryptonDockableWorkspace.TabIndex = 0;
-
-            //
+            // 
+            kryptonDockableWorkspace.ActivePage = null;
+            kryptonDockableWorkspace.CompactFlags = Krypton.Workspace.CompactFlags.RemoveEmptyCells | Krypton.Workspace.CompactFlags.RemoveEmptySequences | Krypton.Workspace.CompactFlags.PromoteLeafs;
+            kryptonDockableWorkspace.ContainerBackStyle = Krypton.Toolkit.PaletteBackStyle.PanelClient;
+            kryptonDockableWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
+            kryptonDockableWorkspace.Location = new System.Drawing.Point(0, 0);
+            kryptonDockableWorkspace.Name = "kryptonDockableWorkspace";
+            // 
+            // 
+            // 
+            kryptonDockableWorkspace.Root.UniqueName = "51ff52bd6b814f759db37d91a811dfbd";
+            kryptonDockableWorkspace.SeparatorStyle = Krypton.Toolkit.SeparatorStyle.LowProfile;
+            kryptonDockableWorkspace.ShowMaximizeButton = false;
+            kryptonDockableWorkspace.Size = new System.Drawing.Size(930, 521);
+            kryptonDockableWorkspace.SplitterWidth = 5;
+            kryptonDockableWorkspace.TabIndex = 0;
+            kryptonDockableWorkspace.TabStop = true;
+            // 
             // contextMenuStrip1
-            //
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.contextMenuItemSetDefaultSortOrder});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 26);
-
-            //
+            // 
+            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { contextMenuItemSetDefaultSortOrder });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new System.Drawing.Size(216, 26);
+            // 
             // contextMenuItemSetDefaultSortOrder
-            //
-            this.contextMenuItemSetDefaultSortOrder.Name = "contextMenuItemSetDefaultSortOrder";
-            this.contextMenuItemSetDefaultSortOrder.Size = new System.Drawing.Size(215, 22);
-            this.contextMenuItemSetDefaultSortOrder.Text = "Set as Default Sort Column";
-            this.contextMenuItemSetDefaultSortOrder.Click += new System.EventHandler(this.ContextMenuItemSetDefaultSortOrder_Click);
-
-            //
+            // 
+            contextMenuItemSetDefaultSortOrder.Name = "contextMenuItemSetDefaultSortOrder";
+            contextMenuItemSetDefaultSortOrder.Size = new System.Drawing.Size(215, 22);
+            contextMenuItemSetDefaultSortOrder.Text = "Set as Default Sort Column";
+            contextMenuItemSetDefaultSortOrder.Click += ContextMenuItemSetDefaultSortOrder_Click;
+            // 
+            // themeMenuStrip
+            // 
+            themeMenuStrip.Name = "themeMenuStrip";
+            themeMenuStrip.Size = new System.Drawing.Size(61, 4);
+            // 
+            // autoRefreshTimer
+            // 
+            autoRefreshTimer.Interval = 300000;
+            autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+            // 
             // FormMainWindow
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(860, 561);
-            this.Controls.Add(this.panelMain);
-            this.Controls.Add(this.panelToolbar);
-            this.Name = "FormMainWindow";
-            this.Text = "Service Manager";
-
-            ((System.ComponentModel.ISupportInitialize)(this.panelToolbar)).EndInit();
-            this.panelToolbar.ResumeLayout(false);
-            this.panelToolbar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelMain)).EndInit();
-            this.panelMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonDockableWorkspace)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.ResumeLayout(false);
+            // 
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(930, 561);
+            Controls.Add(panelMain);
+            Controls.Add(panelToolbar);
+            Name = "FormMainWindow";
+            Text = "Service Manager";
+            ((System.ComponentModel.ISupportInitialize)panelToolbar).EndInit();
+            panelToolbar.ResumeLayout(false);
+            panelToolbar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)panelMain).EndInit();
+            panelMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)kryptonDockableWorkspace).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
