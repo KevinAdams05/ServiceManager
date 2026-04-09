@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace ServiceManager
@@ -14,6 +15,7 @@ namespace ServiceManager
 
         public event EventHandler DelayedTextChanged;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int DelayedTextChangedTimeout { get; set; }
 
         protected override void Dispose(bool disposing)

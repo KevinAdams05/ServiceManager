@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.ServiceProcess;
@@ -173,6 +174,30 @@ namespace ServiceManager
             string result = serviceController.Status.ToString();
 
             return result;
+        }
+
+        public static string GetSettingTheme()
+        {
+            string theme = ConfigurationManager.AppSettings["Theme"];
+
+            return string.IsNullOrEmpty(theme) ? "LightGray" : theme;
+        }
+
+        public static void UpdateSettingTheme(string theme)
+        {
+            UpdateSettingInAppConfig("Theme", theme);
+        }
+
+        public static Icon GetApplicationIcon()
+        {
+            string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources and Examples", "Settings.ico");
+
+            if (File.Exists(iconPath))
+            {
+                return new Icon(iconPath);
+            }
+
+            return null;
         }
 
         private static void UpdateSettingInAppConfig(string setting, object value)

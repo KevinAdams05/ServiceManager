@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Krypton.Toolkit;
 
 namespace ServiceManager
 {
-    public partial class ErrorMessageDialog : Form
+    public partial class ErrorMessageDialog : KryptonForm
     {
         private const int WindowHeightExpanded = 242;
         private const int WindowHeightCollapsed = 120;
@@ -19,7 +14,14 @@ namespace ServiceManager
         {
             InitializeComponent();
 
-            labelErrorTitle.Text = title;
+            Icon appIcon = Utility.GetApplicationIcon();
+
+            if (appIcon != null)
+            {
+                this.Icon = appIcon;
+            }
+
+            labelErrorTitle.Values.Text = title;
             textDetailErrorText.Text = detailedError;
 
             if (hasDetailedError)
@@ -38,12 +40,12 @@ namespace ServiceManager
 
         private void labelErrorTitle_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(labelErrorTitle.Text);
+            Clipboard.SetText(labelErrorTitle.Values.Text);
         }
 
         private void buttonCopyText_Click(object sender, EventArgs e)
         {
-            string clipboardText = labelErrorTitle.Text;
+            string clipboardText = labelErrorTitle.Values.Text;
 
             if (!string.IsNullOrEmpty(textDetailErrorText.Text))
             {

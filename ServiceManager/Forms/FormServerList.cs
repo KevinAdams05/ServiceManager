@@ -1,22 +1,24 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Krypton.Toolkit;
 
 namespace ServiceManager
 {
-    public partial class FormServerList : Form
+    public partial class FormServerList : KryptonForm
     {
         public FormServerList()
         {
             InitializeComponent();
+
+            Icon appIcon = Utility.GetApplicationIcon();
+
+            if (appIcon != null)
+            {
+                this.Icon = appIcon;
+            }
 
             Servers = Utility.LoadServerList();
             dataGridView1.AutoGenerateColumns = true;
@@ -25,13 +27,14 @@ namespace ServiceManager
             ResizeColumns();
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<Server> Servers { get; set; }
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             Utility.UpdateServerList(Servers);
             Close();
-            DialogResult = DialogResult.OK;   
+            DialogResult = DialogResult.OK;
         }
 
         private void ButtonDiscard_Click(object sender, EventArgs e)
