@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Krypton.Docking;
 using Krypton.Navigator;
@@ -26,11 +27,18 @@ namespace ServiceManager
         public FormMainWindow()
         {
             InitializeComponent();
+            SetVersionTitle();
             CreateControls();
             SetupDocking();
             ApplyThemeFromSettings();
             SetFormIcon();
             InitializeApplication();
+        }
+
+        private void SetVersionTitle()
+        {
+            string version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
+            this.Text = $"Service Manager v{version}";
         }
 
         private void SetFormIcon()
@@ -56,6 +64,7 @@ namespace ServiceManager
                 new DataGridViewTextBoxColumn { HeaderText = "Server", Name = "Server" },
                 new DataGridViewTextBoxColumn { HeaderText = "Service", Name = "Service", Width = 150 },
                 new DataGridViewTextBoxColumn { HeaderText = "Status", Name = "Status" },
+                new DataGridViewTextBoxColumn { HeaderText = "Memory (MB)", Name = "Memory", Width = 100 },
                 new DataGridViewButtonColumn { HeaderText = "", Name = "Stop", Text = "Stop", UseColumnTextForButtonValue = true, Width = 80 },
                 new DataGridViewButtonColumn { HeaderText = "", Name = "Start", Text = "Start", UseColumnTextForButtonValue = true, Width = 80 }
             });
@@ -233,6 +242,7 @@ namespace ServiceManager
                     {
                         string status = Utility.GetServiceStatus(computerName, serviceName);
                         dataGridView1.Rows[row.Index].Cells["Status"].Value = status;
+                        dataGridView1.Rows[row.Index].Cells["Memory"].Value = Utility.GetServiceMemoryUsage(computerName, serviceName);
 
                         if (status == "Stopped")
                         {
@@ -500,6 +510,35 @@ namespace ServiceManager
             }
 
             textBoxStatus.AppendText($"Column {columnIndex} set as default sort column {Environment.NewLine}");
+        }
+
+        private void ButtonAbout_Click(object sender, EventArgs e)
+        {
+            FormAbout formAbout = new FormAbout();
+            formAbout.ShowDialog();
+        }
+
+        private void ButtonAutoRefresh_Click(object sender, EventArgs e)
+        {
+            if (autoRefreshTimer.Enabled)
+            {
+                autoRefreshTimer.Stop();
+                buttonAutoRefresh.Values.Text = "Auto Refresh: Off";
+                textBoxStatus.AppendText($"Auto refresh disabled{Environment.NewLine}");
+            }
+            else
+            {
+                int intervalMinutes = Utility.GetSettingAutoRefreshMinutes();
+                autoRefreshTimer.Interval = intervalMinutes * 60 * 1000;
+                autoRefreshTimer.Start();
+                buttonAutoRefresh.Values.Text = $"Auto Refresh: {intervalMinutes}m";
+                textBoxStatus.AppendText($"Auto refresh enabled every {intervalMinutes} minutes{Environment.NewLine}");
+            }
+        }
+
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            RefreshServiceStatus();
         }
 
         private void ButtonThemeSelect_Click(object sender, EventArgs e)

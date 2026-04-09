@@ -33,6 +33,9 @@ namespace ServiceManager
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuItemSetDefaultSortOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.themeMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.buttonAutoRefresh = new Krypton.Toolkit.KryptonButton();
+            this.autoRefreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.buttonAbout = new Krypton.Toolkit.KryptonButton();
 
             ((System.ComponentModel.ISupportInitialize)(this.panelToolbar)).BeginInit();
             this.panelToolbar.SuspendLayout();
@@ -55,8 +58,10 @@ namespace ServiceManager
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Size = new System.Drawing.Size(784, 40);
             this.panelToolbar.TabIndex = 0;
+            this.panelToolbar.Controls.Add(this.buttonAbout);
             this.panelToolbar.Controls.Add(this.buttonEditServerList);
             this.panelToolbar.Controls.Add(this.buttonThemeSelect);
+            this.panelToolbar.Controls.Add(this.buttonAutoRefresh);
             this.panelToolbar.Controls.Add(this.labelRefreshDate);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
 
@@ -96,6 +101,23 @@ namespace ServiceManager
             this.themeMenuStrip.Size = new System.Drawing.Size(200, 26);
 
             //
+            // buttonAutoRefresh
+            //
+            this.buttonAutoRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAutoRefresh.Location = new System.Drawing.Point(430, 8);
+            this.buttonAutoRefresh.Name = "buttonAutoRefresh";
+            this.buttonAutoRefresh.Size = new System.Drawing.Size(120, 25);
+            this.buttonAutoRefresh.TabIndex = 4;
+            this.buttonAutoRefresh.Values.Text = "Auto Refresh: Off";
+            this.buttonAutoRefresh.Click += new System.EventHandler(this.ButtonAutoRefresh_Click);
+
+            //
+            // autoRefreshTimer
+            //
+            this.autoRefreshTimer.Interval = 300000;
+            this.autoRefreshTimer.Tick += new System.EventHandler(this.AutoRefreshTimer_Tick);
+
+            //
             // buttonEditServerList
             //
             this.buttonEditServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -105,6 +127,17 @@ namespace ServiceManager
             this.buttonEditServerList.TabIndex = 3;
             this.buttonEditServerList.Values.Text = "Edit Server List";
             this.buttonEditServerList.Click += new System.EventHandler(this.ButtonEditServerList_Click);
+
+            //
+            // buttonAbout
+            //
+            this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAbout.Location = new System.Drawing.Point(780, 8);
+            this.buttonAbout.Name = "buttonAbout";
+            this.buttonAbout.Size = new System.Drawing.Size(60, 25);
+            this.buttonAbout.TabIndex = 5;
+            this.buttonAbout.Values.Text = "About";
+            this.buttonAbout.Click += new System.EventHandler(this.ButtonAbout_Click);
 
             //
             // panelMain
@@ -144,7 +177,7 @@ namespace ServiceManager
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(860, 561);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelToolbar);
             this.Name = "FormMainWindow";
@@ -171,7 +204,10 @@ namespace ServiceManager
         private Krypton.Toolkit.KryptonButton buttonThemeSelect;
         private Krypton.Toolkit.KryptonLabel labelRefreshDate;
         private System.Windows.Forms.ContextMenuStrip themeMenuStrip;
+        private Krypton.Toolkit.KryptonButton buttonAutoRefresh;
+        private System.Windows.Forms.Timer autoRefreshTimer;
         private Krypton.Docking.KryptonDockableWorkspace kryptonDockableWorkspace;
+        private Krypton.Toolkit.KryptonButton buttonAbout;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem contextMenuItemSetDefaultSortOrder;
     }

@@ -176,6 +176,64 @@ namespace ServiceManager
             return result;
         }
 
+        public static string GetServiceMemoryUsage(string computerName, string serviceName)
+        {
+            try
+            {
+                ServiceController serviceController = new ServiceController(serviceName, computerName);
+
+                if (serviceController.Status != ServiceControllerStatus.Running)
+                {
+                    return "-";
+                }
+
+                string query = $"SELECT ProcessId FROM Win32_Service WHERE Name='{serviceName}'";
+                System.Management.ManagementScope scope = new System.Management.ManagementScope($"\\\\{computerName}\\root\\cimv2");
+                System.Management.ObjectQuery objectQuery = new System.Management.ObjectQuery(query);
+                System.Management.ManagementObjectSearcher searcher = new System.Management.ManagementObjectSearcher(scope, objectQuery);
+                System.Management.ManagementObjectCollection results = searcher.Get();
+
+                foreach (System.Management.ManagementObject obj in results)
+                {
+                    uint processId = (uint)obj["ProcessId"];
+
+                    if (processId == 0)
+                    {
+                        return "-";
+                    }
+
+                    string processQuery = $"SELECT WorkingSetSize FROM Win32_Process WHERE ProcessId={processId}";
+                    System.Management.ManagementObjectSearcher processSearcher = new System.Management.ManagementObjectSearcher(scope, new System.Management.ObjectQuery(processQuery));
+
+                    foreach (System.Management.ManagementObject processObj in processSearcher.Get())
+                    {
+                        ulong workingSetBytes = (ulong)processObj["WorkingSetSize"];
+                        double memoryMB = workingSetBytes / (1024.0 * 1024.0);
+
+                        return memoryMB.ToString("F1");
+                    }
+                }
+            }
+            catch
+            {
+                return "N/A";
+            }
+
+            return "N/A";
+        }
+
+        public static int GetSettingAutoRefreshMinutes()
+        {
+            string value = ConfigurationManager.AppSettings["AutoRefreshMinutes"];
+
+            if (int.TryParse(value, out int minutes) && minutes > 0)
+            {
+                return minutes;
+            }
+
+            return 5;
+        }
+
         public static string GetSettingTheme()
         {
             string theme = ConfigurationManager.AppSettings["Theme"];

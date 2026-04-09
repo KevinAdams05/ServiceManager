@@ -7,6 +7,13 @@
     <RootNamespace>ServiceManager</RootNamespace>
     <AssemblyName>ServiceManager</AssemblyName>
     <ApplicationIcon>Resources and Examples\Settings.ico</ApplicationIcon>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Product>Service Manager</Product>
+    <Company>Kevin Adams</Company>
+    <Copyright>Copyright (c) Kevin Adams 2024</Copyright>
+    <Description>Windows service management tool for monitoring and controlling services across multiple servers.</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +21,7 @@
     <PackageReference Include="Krypton.Navigator" Version="100.26.1.19" />
     <PackageReference Include="Krypton.Toolkit" Version="100.26.1.19" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Management" Version="9.0.4" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.4" />
   </ItemGroup>

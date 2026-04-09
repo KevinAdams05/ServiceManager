@@ -21,8 +21,9 @@ namespace ServiceManager
             }
 
             Servers = Utility.LoadServerList();
-            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.AutoGenerateColumns = false;
             dataGridView1.AutoSize = true;
+            SetupServerListColumns();
             dataGridView1.DataSource = Servers;
             ResizeColumns();
         }
@@ -72,6 +73,37 @@ namespace ServiceManager
             RefreshDataSource();
         }
 
+        private void SetupServerListColumns()
+        {
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Environment",
+                DataPropertyName = "EnvironmentName",
+                Name = "EnvironmentName"
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Server",
+                DataPropertyName = "ServerName",
+                Name = "ServerName"
+            });
+
+            DataGridViewComboBoxColumn serverTypeColumn = new DataGridViewComboBoxColumn();
+            serverTypeColumn.HeaderText = "Server Type";
+            serverTypeColumn.DataPropertyName = "ServerType";
+            serverTypeColumn.Name = "ServerType";
+            serverTypeColumn.DataSource = Enum.GetValues(typeof(ServerTypes));
+            dataGridView1.Columns.Add(serverTypeColumn);
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Service Name",
+                DataPropertyName = "ServiceName",
+                Name = "ServiceName"
+            });
+        }
+
         private void RefreshDataSource()
         {
             dataGridView1.DataSource = null;
@@ -81,9 +113,10 @@ namespace ServiceManager
 
         private void ResizeColumns()
         {
-            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
         }
     }
 }
